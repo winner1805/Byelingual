@@ -1,7 +1,7 @@
 # Byelingual
 Game project
 
-# Authors
-Sontra Samela
-Anh Phan
-Vedran Brnjetic
+# Authors<br/>
+Sontra Samela<br/>
+Anh Phan<br/>
+Vedran Brnjetic<br/>
