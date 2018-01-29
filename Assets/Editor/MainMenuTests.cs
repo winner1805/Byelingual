@@ -10,7 +10,7 @@ namespace Assets.Editor
         private Button _exitButton;
         
         [Test]
-        public void MainMenuTestsSimplePasses() {
+        public void Exit_Button_Present() {
             _exitButton = GameObject.Find("ButtonExit").GetComponent<Button>();
 
             Assert.IsNotNull(_exitButton);
