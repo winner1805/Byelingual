@@ -7,13 +7,13 @@ namespace Assets.Editor
 {
     public class MainMenuTests
     {
-        private Button _exitButton;
+        
         
         [Test]
         public void Exit_Button_Present() {
-            _exitButton = GameObject.Find("ButtonExit").GetComponent<Button>();
+            var exitButton = GameObject.Find("btnExit").GetComponent<Button>();
 
-            Assert.IsNotNull(_exitButton);
+            Assert.IsNotNull(exitButton);
         }
 
 
