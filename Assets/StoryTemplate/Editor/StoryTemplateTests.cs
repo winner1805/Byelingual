@@ -17,5 +17,14 @@ public class StoryTemplateTests {
 
         Assert.IsNotNull(canvas);
     }
-    
+
+    [Test]
+    public void Is_The_StoryIntroCanvas_Present()
+    {
+        var cnvName = "StoryIntroCanvas";
+        var canvas = GetCanvas(cnvName);
+
+        Assert.IsNotNull(canvas);
+    }
+
 }
