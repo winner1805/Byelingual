@@ -36,7 +36,7 @@ namespace Assets
             _exitButton = GameObject.Find("btnExit").GetComponent<Button>();
             _buttonS1Int = GameObject.Find("ButtonS1Int").GetComponent<Button>();
             //Only for testing
-            _story1Button = GameObject.Find("ButtonStory1").GetComponent<Button>();
+            _story1Button = GameObject.Find("btnStoryOne").GetComponent<Button>();
 
             //Assigning Methods to Unity actions
             _exit += ExitGame;
