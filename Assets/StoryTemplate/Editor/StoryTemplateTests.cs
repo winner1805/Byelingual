@@ -27,4 +27,15 @@ public class StoryTemplateTests {
         Assert.IsNotNull(canvas);
     }
 
+    [Test]
+    public void Is_The_StoryCharacterDialogCanvas_Present()
+    {
+        var cnvName = "StoryCharacterDialogCanvas";
+        var canvas = GetCanvas(cnvName);
+
+        Assert.IsNotNull(canvas);
+    }
+
+    
+
 }
