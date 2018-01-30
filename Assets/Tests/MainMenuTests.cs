@@ -6,15 +6,26 @@ namespace Assets.Tests
 {
     public class MainMenuTests
     {
-        
-        
-        [Test]
-        public void Exit_Button_Present() {
-            var exitButton = GameObject.Find("btnExit").GetComponent<Button>();
-
-            Assert.IsNotNull(exitButton);
+        private static Button GetButton(string btnName)
+        {
+            return GameObject.Find(btnName).GetComponent<Button>();
         }
 
+        [Test]
+        public void Exit_Button_Present() {
+            var btnName = "btnExit";
+            var testButton = GetButton(btnName);
 
+            Assert.IsNotNull(testButton);
+        }
+
+        [Test]
+        public void Story_One_Button_Present()
+        {
+            var btnName = "btnStoryOne";
+            var testButton = GetButton(btnName);
+
+            Assert.IsNotNull(testButton);
+        }
     }
 }
