@@ -33,7 +33,7 @@ namespace Assets
 
 
             //Button initialization
-            _exitButton = GameObject.Find("ButtonExit").GetComponent<Button>();
+            _exitButton = GameObject.Find("btnExit").GetComponent<Button>();
             _buttonS1Int = GameObject.Find("ButtonS1Int").GetComponent<Button>();
             //Only for testing
             _story1Button = GameObject.Find("ButtonStory1").GetComponent<Button>();
