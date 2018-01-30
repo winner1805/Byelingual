@@ -1,9 +1,8 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Editor
+namespace Assets.Tests
 {
     public class MainMenuTests
     {
