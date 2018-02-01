@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Assets.StoryTemplate.Infrastructure
 {
-    public static class An
+    public static class A
     {
-        public static ImageBuilder Image()
+        public static CanvasBuilder Canvas()
         {
-            return new ImageBuilder();
+            return new CanvasBuilder();
         }
     }
 }
