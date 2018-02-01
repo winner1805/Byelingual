@@ -2,19 +2,11 @@
 
 namespace Assets.StoryTemplate.Infrastructure
 {
-    public class CanvasBuilder
+    public class CanvasBuilder : TestBuilder<Canvas>
     {
 
         private string _name = "UnnamedCanvas";
 
-
-
-        public Canvas Build()
-        {
-            var canvas = new GameObject().AddComponent<Canvas>();
-            canvas.name = _name;
-            return canvas;
-        }
 
         public CanvasBuilder Named(string name)
         {
@@ -22,9 +14,11 @@ namespace Assets.StoryTemplate.Infrastructure
             return this;
         }
 
-        public static implicit operator Canvas(CanvasBuilder canvasBuilder)
+        public override Canvas Build()
         {
-            return canvasBuilder.Build();
+            var canvas = new GameObject().AddComponent<Canvas>();
+            canvas.name = _name;
+            return canvas;
         }
     }
 }
