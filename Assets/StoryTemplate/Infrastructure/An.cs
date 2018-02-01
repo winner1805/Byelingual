@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Assets.StoryTemplate.Infrastructure
+﻿namespace Assets.StoryTemplate.Infrastructure
 {
     public static class A
     {
