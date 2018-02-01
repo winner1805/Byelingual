@@ -24,15 +24,24 @@ namespace Assets.StoryTemplate.Editor
                 Assert.IsNotNull(canvas);
             }
 
+            [Test]
+            public void _Image_Can_Be_Created()
+            {
+
+                var image = (Image)An.Image().Named("TestImage");
+
+                Assert.IsNotNull(image);
+            }
 
 
             [Test]
             public void Is_The_StoryCanvas_Present()
             {
                 const string cnvName = "StoryCanvas";
-                var canvas = GetCanvas(cnvName);
+                var canvas = (Canvas) A.Canvas().Named(cnvName);
 
                 Assert.IsNotNull(canvas);
+                Assert.AreEqual(cnvName, canvas.name);
             }
 
             [Test]
