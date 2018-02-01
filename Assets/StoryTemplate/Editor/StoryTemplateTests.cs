@@ -45,6 +45,17 @@ namespace Assets.StoryTemplate.Editor
             }
 
             [Test]
+            public void _Add_An_Image_To_A_Canvas()
+            {
+                var canvas =(Canvas) A.Canvas().Named("Canvas");
+                var image = (Image) An.Image().Named("Image");
+                image.transform.SetParent(canvas.transform, false);
+
+                Assert.AreEqual(canvas.transform.Find("Image").name, image.name);
+
+            }
+
+            [Test]
             public void Is_The_StoryIntroCanvas_Present()
             {
                 const string cnvName = "StoryIntroCanvas";
