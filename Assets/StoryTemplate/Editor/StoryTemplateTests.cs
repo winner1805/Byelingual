@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Assets.StoryTemplate.Infrastructure;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,17 @@ namespace Assets.StoryTemplate.Editor
             {
                 return GameObject.Find(cnvName).GetComponent<Canvas>();
             }
+
+            [Test]
+            public void _Canvas_Can_Be_Created()
+            {
+
+                var canvas = (Canvas) A.Canvas().Named("TestCanvas");
+
+                Assert.IsNotNull(canvas);
+            }
+
+
 
             [Test]
             public void Is_The_StoryCanvas_Present()

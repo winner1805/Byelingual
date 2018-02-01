@@ -1,16 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CanvasBuilder : MonoBehaviour {
+namespace Assets.StoryTemplate.Infrastructure
+{
+    public class CanvasBuilder
+    {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        private string _name = "UnnamedCanvas";
+
+
+
+        public Canvas Build()
+        {
+            var canvas = new GameObject().AddComponent<Canvas>();
+            canvas.name = _name;
+            return canvas;
+        }
+
+        public CanvasBuilder Named(string name)
+        {
+            _name = name;
+            return this;
+        }
+
+        public static implicit operator Canvas(CanvasBuilder canvasBuilder)
+        {
+            return canvasBuilder.Build();
+        }
+    }
 }
