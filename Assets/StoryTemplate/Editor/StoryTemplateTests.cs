@@ -49,16 +49,24 @@ namespace Assets.StoryTemplate.Editor
 
                 Assert.IsNotNull(canvas);
             }
+
             [Test]
             public void Is_The_StoryMemorySequenceCanvas_Present()
             {
                 const string cnvName = "StoryMemorySequenceCanvas";
                 var canvas = GetCanvas(cnvName);
-                //Any change
+                
                 Assert.IsNotNull(canvas);
             }
 
-
+            [Test]
+            public void Is_The_StoryEndingCanvas_Present()
+            {
+                const string cnvName = "StoryEndingCanvas";
+                var canvas = GetCanvas(cnvName);
+                
+                Assert.IsNotNull(canvas);
+            }
         }
 
         public class Buttons
