@@ -6,6 +6,14 @@ Sontra Samela<br/>
 Anh Phan<br/>
 Vedran Brnjetic<br/>
 
+
 #Development Concepts
 Test Driven Development
 A few more
+
+# DRAMA!
+
+WE HAVE CONFLICTING OPINIONS!
+
+How to <br>resolve</br> this?
+
