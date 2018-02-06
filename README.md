@@ -6,7 +6,6 @@ Sontra Samela<br/>
 Anh Phan<br/>
 Vedran Brnjetic<br/>
 
-
 # Development Concepts
 Test Driven Development
 A few more
