@@ -5,3 +5,7 @@ Game project: Eight weeks' main development time for a 2D game in the Visual Nov
 Sontra Samela<br/>
 Anh Phan<br/>
 Vedran Brnjetic<br/>
+
+#Development Concepts
+Test Driven Development
+A few more
