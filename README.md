@@ -7,13 +7,13 @@ Anh Phan<br/>
 Vedran Brnjetic<br/>
 
 
-#Development Concepts
+# Development Concepts
 Test Driven Development
 A few more
 
-# DRAMA!
+## DRAMA!
 
 WE HAVE CONFLICTING OPINIONS!
 
-How to <br>resolve</br> this?
+How to <b>resolve</b> this?
 
