@@ -5,3 +5,9 @@ Game project: Eight weeks' main development time for a 2D game in the Visual Nov
 Sontra Samela<br/>
 Anh Phan<br/>
 Vedran Brnjetic<br/>
+
+# DRAMA!
+
+WE HAVE CONFLICTING OPINIONS!
+
+How to <br>resolve</br> this?
