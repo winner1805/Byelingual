@@ -6,5 +6,15 @@
         {
             return new CanvasBuilder();
         }
+
+        public static ButtonBuilder Button()
+        {
+            return new ButtonBuilder();
+        }
+
+        public static GameObjectBuilder GameObject()
+        {
+            return new GameObjectBuilder();
+        }
     }
 }
