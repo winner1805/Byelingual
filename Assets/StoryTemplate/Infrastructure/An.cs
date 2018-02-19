@@ -1,10 +1,10 @@
 ﻿namespace Assets.StoryTemplate.Infrastructure
 {
-    public static class A
+    public static class An
     {
-        public static CanvasBuilder Canvas()
+        public static ImageBuilder Image()
         {
-            return new CanvasBuilder();
+            return new ImageBuilder();
         }
     }
 }
