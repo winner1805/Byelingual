@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
+using Debug = UnityEngine.Debug;
 
 namespace Assets
 {
@@ -17,7 +19,7 @@ namespace Assets
             // Get the response.  
             var response = request.GetResponse();
             // Display the status.  
-            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
             // Get the stream containing content returned by the server.  
             var dataStream = response.GetResponseStream();
             // Open the stream using a StreamReader for easy access.  
@@ -30,6 +32,7 @@ namespace Assets
 
             
             //Return the value
+            //Debug.Log(responseFromServer);
             return responseFromServer;
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Assets.StoryTemplate.Infrastructure;
 using NUnit.Framework;
@@ -126,6 +127,33 @@ namespace Assets.StoryTemplate.Editor
             public void Can_Download_Story_List_From_Game_URI()
             {
                 var jsonString = Resources.GetJsonResponse("stories");
+                var stories = new List<Story>();
+                var jsonStories = JSON.Parse(jsonString);
+
+                var c = GameObject.Find("StoryCanvas").GetComponent<Canvas>();
+                var t = GameObject.Find("txStoryList").GetComponent<Text>();
+                t.text = "";
+
+                var storyCount = jsonStories["stories"].Count;
+                for (var i = 0; i < storyCount; i++)
+                {
+                    stories.Add(
+                        new Story(
+                            jsonStories["stories"][i]["name"].ToString(), 
+                            jsonStories["stories"][i]["description"].ToString()
+                        )
+                    );
+                }
+
+
+                foreach (var story in stories)
+                {
+                    t.text += (story + "\n");
+                }
+
+                Assert.AreNotEqual(0, stories.Count);
+
+                
 
             }
 
