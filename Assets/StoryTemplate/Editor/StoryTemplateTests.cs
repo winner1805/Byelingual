@@ -4,7 +4,7 @@ using Assets.StoryTemplate.Infrastructure;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Net;
+using SimpleJSON;
 
 
 namespace Assets.StoryTemplate.Editor
@@ -125,32 +125,11 @@ namespace Assets.StoryTemplate.Editor
             [Test]
             public void Can_Download_Story_List_From_Game_URI()
             {
-                // Create a request for the URL.   
-                WebRequest request = WebRequest.Create(new Uri(Resources.GAME_URI + "stories/"));
-                // If required by the server, set the credentials.  
-                request.Credentials = CredentialCache.DefaultCredentials;
-                // Get the response.  
-                WebResponse response = request.GetResponse();
-                // Display the status.  
-                Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-                // Get the stream containing content returned by the server.  
-                Stream dataStream = response.GetResponseStream();
-                // Open the stream using a StreamReader for easy access.  
-                StreamReader reader = new StreamReader(dataStream);
-                // Read the content.  
-                string responseFromServer = reader.ReadToEnd();
-                // Display the content.  
-                Debug.Log(responseFromServer);
-                // Clean up the streams and the response.  
-                reader.Close();
-                response.Close();
+                var jsonString = Resources.GetJsonResponse("stories");
 
             }
 
-            private void GetJsonResponse(IAsyncResult ar)
-            {
-                throw new NotImplementedException();
-            }
+            
         }
     }
 }

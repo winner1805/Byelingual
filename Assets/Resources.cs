@@ -1,7 +1,36 @@
-﻿namespace Assets
+﻿using System;
+using System.IO;
+using System.Net;
+
+namespace Assets
 {
     public static class Resources
     {
-        public const string GAME_URI = "http://api.byelingual.me:8000/";
+        private const string GameUri = "http://api.byelingual.me:8000/";
+
+        public static string GetJsonResponse(string apiSource)
+        {
+            // Create a request for the URL.   
+            var request = WebRequest.Create(new Uri(GameUri + apiSource +"/"));
+            // If required by the server, set the credentials.  
+            request.Credentials = CredentialCache.DefaultCredentials;
+            // Get the response.  
+            var response = request.GetResponse();
+            // Display the status.  
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            // Get the stream containing content returned by the server.  
+            var dataStream = response.GetResponseStream();
+            // Open the stream using a StreamReader for easy access.  
+            var reader = new StreamReader(dataStream);
+            // Read the content.  
+            var responseFromServer = reader.ReadToEnd();
+            // Clean up the streams and the response.  
+            reader.Close();
+            response.Close();
+
+            
+            //Return the value
+            return responseFromServer;
+        }
     }
 }
