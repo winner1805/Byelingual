@@ -3,6 +3,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 namespace Assets.StoryTemplate.Editor
 {
     public class StoryTemplateTests {
@@ -117,6 +118,13 @@ namespace Assets.StoryTemplate.Editor
                 Assert.IsNotNull(testButton);
             
             }
+            /*
+            [Test]
+            public async void Can_Download_Story_List_From_Game_URI()
+            {
+             //   using (var httpClient = new HttpClient())
+
+            }*/
         }
     }
 }
