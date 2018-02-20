@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.StoryTemplate.Infrastructure;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -33,7 +34,7 @@ namespace Assets
         private void Start()
         {
             //
-            _storyTemplateScene = SceneManager.GetSceneByName("StoryScene");
+            _storyTemplateScene = A.Scene().Named("StoryScene");
             SceneManager.LoadScene("StoryScene");
 
             /*

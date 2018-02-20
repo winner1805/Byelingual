@@ -1,14 +1,24 @@
-﻿using UnityEngine;
+﻿using Assets.StoryTemplate.Infrastructure;
+using UnityEngine;
+using UnityEngine.UI;
 
-public class ButtonBuilder : MonoBehaviour {
+public class ButtonBuilder : TestBuilder<Button>
+{
+    private string _name;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public ButtonBuilder Named(string name)
+    {
+        _name = name;
+        return this;
+    }
+
+    public override Button Build()
+    {
+
+        var button = new GameObject().AddComponent<Button>();
+        
+        button.name = _name;
+        return button;
+
+    }
 }

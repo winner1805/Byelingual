@@ -5,7 +5,6 @@ namespace Assets.StoryTemplate.Infrastructure
     public abstract class TestBuilder<T>
     {
 
-
         public abstract T Build();
 
         
