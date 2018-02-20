@@ -1,24 +1,25 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.StoryTemplate.Infrastructure
 {
-    public class CanvasBuilder : TestBuilder<Canvas>
+    public class ImageBuilder : TestBuilder<Image>
     {
 
-        private string _name = "UnnamedCanvas";
+        private string _name = "UnnamedImage";
 
 
-        public CanvasBuilder Named(string name)
+        public ImageBuilder Named(string name)
         {
             _name = name;
             return this;
         }
 
-        public override Canvas Build()
+        public override Image Build()
         {
-            var canvas = new GameObject().AddComponent<Canvas>();
-            canvas.name = _name;
-            return canvas;
+            var image = new GameObject().AddComponent<Image>();
+            image.name = _name;
+            return image;
         }
     }
 }

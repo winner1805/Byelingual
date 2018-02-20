@@ -32,18 +32,20 @@ namespace Assets.StoryTemplate
             var c = GameObject.Find("StoryCanvas").GetComponent<Canvas>();
             c.transform.SetAsLastSibling();
 
-        }
-	
-        // Update is called once per frame
-        void Update () {
             var t = GameObject.Find("txStoryList").GetComponent<Text>();
             t.text = "";
 
             foreach (var story in _stories)
             {
-                Debug.Log(story);
-                
+                t.text += story + "\n";
+
             }
+
+        }
+	
+        // Update is called once per frame
+        void Update () {
+           
         }
     }
 }

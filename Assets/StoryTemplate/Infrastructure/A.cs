@@ -16,5 +16,11 @@
         {
             return new GameObjectBuilder();
         }
+
+        public static SceneBuilder Scene()
+        {
+            return new SceneBuilder();
+            
+        }
     }
 }

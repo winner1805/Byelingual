@@ -1,22 +1,27 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets
 {
     public class GameController : MonoBehaviour
     {
+        //Scenes
+        private Scene _mainMenuScene;
+        private Scene _storyTemplateScene;
+        
         //Canvases
-        Canvas _mainMenu;
-        Canvas _story1Intro;
+        private Canvas _mainMenu;
+        private Canvas _story1Intro;
 
         //Buttons
-        Button _exitButton;
+        private Button _exitButton;
 
-        Button _buttonS1Int;
+        private Button _buttonS1Int;
 
         //Only for testing
-        Button _story1Button;
+        private Button _story1Button;
 
         //UnityActions
         private UnityAction _exit;
@@ -27,6 +32,11 @@ namespace Assets
         // Use this for initialization
         private void Start()
         {
+            //
+            _storyTemplateScene = SceneManager.GetSceneByName("StoryScene");
+            SceneManager.LoadScene("StoryScene");
+
+            /*
             //Canvas initialization
             _mainMenu = GameObject.Find("MainMenu").GetComponent<Canvas>();
             _story1Intro = GameObject.Find("Story1Intro").GetComponent<Canvas>();
@@ -49,7 +59,7 @@ namespace Assets
             _exitButton.onClick.AddListener(_exit);
             _story1Button.onClick.AddListener(_startStory1);
             //Only for testing
-            _buttonS1Int.onClick.AddListener(_exitStory1Intro);
+            _buttonS1Int.onClick.AddListener(_exitStory1Intro);*/
         }
 
         // Update is called once per frame
