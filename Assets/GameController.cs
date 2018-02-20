@@ -1,4 +1,6 @@
-﻿using Assets.StoryTemplate.Infrastructure;
+﻿using System.Collections.Generic;
+using Assets.StoryTemplate.Infrastructure;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -28,15 +30,61 @@ namespace Assets
         private UnityAction _exit;
         private UnityAction _exitStory1Intro;
         private UnityAction _startStory1;
+        private List<Story> _stories;
 
 
         // Use this for initialization
         private void Start()
         {
             //
-            _storyTemplateScene = A.Scene().Named("StoryScene");
-            SceneManager.LoadScene("StoryScene");
+            
 
+            var jsonString = Resources.GetStringResponse("stories");
+            _stories = new List<Story>();
+            var jsonStories = JSON.Parse(jsonString);
+
+
+
+
+            var storyCount = jsonStories["stories"].Count;
+            for (var i = 0; i < storyCount; i++)
+            {
+                _stories.Add(
+                    new Story(
+                        jsonStories["stories"][i]["name"].ToString(),
+                        jsonStories["stories"][i]["description"].ToString(),
+                        jsonStories["stories"][i]["image"].ToString()
+                    )
+                );
+            }
+
+
+            var canvases = new List<Canvas>();
+            var scenes = new List<Scene>();
+            var buttons = new List<Button>();
+            var sprites = new Dictionary<string, Sprite>();
+
+            foreach (var story in _stories)
+            {
+                canvases.Add(A.Canvas().Named(story + "Canvas"));
+                scenes.Add(A.Scene().Named(story + "Scene"));
+                buttons.Add(A.Button().Named("Load"+ story + "Button"));
+                sprites.Add(story.ToString(), IMG2Sprite.instance.LoadNewSprite("media/" + story.ImageUrl));
+                
+            }
+
+            var mainMenuScene = (Scene) A.Scene().Named("MainMenuScene");
+            
+            SceneManager.LoadScene("MainMenuScene");
+            if (mainMenuScene.isLoaded) { 
+                var mainMenuCanvas = (Canvas)A.Canvas().Named("MainMenuCanvas");
+                foreach (var button in buttons)
+                {
+                    button.transform.SetParent(mainMenuCanvas.transform, false);
+
+                    
+                }
+            }
             /*
             //Canvas initialization
             _mainMenu = GameObject.Find("MainMenu").GetComponent<Canvas>();

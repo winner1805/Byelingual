@@ -11,11 +11,19 @@ namespace Assets
         private Sprite _sprite;
         private Image _backgroundImage;
         private Canvas _titleCanvas;
+        private string _imageUrl;
 
-        public Story(string name, string description)
+        public string ImageUrl
+        {
+            get { return _imageUrl;}
+            set {_imageUrl = value; }
+        }
+
+        public Story(string name, string description, string imageUrl)
         {
             _name = name;
             _description = description;
+            _imageUrl = imageUrl;
         }
 
         public Story WithCanvas(string name)
@@ -27,6 +35,12 @@ namespace Assets
         public Story WithImage(Image image)
         {
             _backgroundImage = image;
+            return this;
+        }
+
+        public Story WithSprite(Sprite sprite)
+        {
+            _sprite = sprite;
             return this;
         }
 

@@ -126,7 +126,7 @@ namespace Assets.StoryTemplate.Editor
             [Test]
             public void Can_Download_Story_List_From_Game_URI()
             {
-                var jsonString = Resources.GetJsonResponse("stories");
+                var jsonString = Resources.GetStringResponse("stories");
                 var stories = new List<Story>();
                 var jsonStories = JSON.Parse(jsonString);
 
@@ -140,7 +140,8 @@ namespace Assets.StoryTemplate.Editor
                     stories.Add(
                         new Story(
                             jsonStories["stories"][i]["name"].ToString(), 
-                            jsonStories["stories"][i]["description"].ToString()
+                            jsonStories["stories"][i]["description"].ToString(),
+                            jsonStories["stories"][i]["image"].ToString()
                         )
                     );
                 }

@@ -11,7 +11,7 @@ namespace Assets.StoryTemplate
         private List<Story> _stories;
         // Use this for initialization
         void Start () {
-            var jsonString = Resources.GetJsonResponse("stories");
+            var jsonString = Resources.GetStringResponse("stories");
             _stories = new List<Story>();
             var jsonStories = JSON.Parse(jsonString);
 
@@ -24,7 +24,8 @@ namespace Assets.StoryTemplate
                 _stories.Add(
                     new Story(
                         jsonStories["stories"][i]["name"].ToString(),
-                        jsonStories["stories"][i]["description"].ToString()
+                        jsonStories["stories"][i]["description"].ToString(),
+                        jsonStories["stories"][i]["image"].ToString()
                     )
                 );
             }
