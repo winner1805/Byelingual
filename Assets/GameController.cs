@@ -34,9 +34,9 @@ namespace Assets
             foreach (var story in _stories)
             {
                 canvases.Add(A.Canvas().Named(story.SnakeCase() + "_canvas"));
-                scenes.Add(A.Scene().Named(story.SnakeCase() + "_scene"));
+                scenes.Add(A.Scene().Named(story.SnakeCase() + "_scenes"));
                 buttons.Add(A.Button().Named("Load"+ story.SnakeCase() + "_button"));
-                sprites.Add(story.ToString(), IMG2Sprite.instance(story.SnakeCase() + "_img").LoadNewSprite("media/" + story.ImageUrl));
+                sprites.Add(story.ToString(), IMG2Sprite.instance(story.SnakeCase() + "_sprite").LoadNewSprite(story.ImageUrl));
                 
             }
 

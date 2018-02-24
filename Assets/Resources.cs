@@ -41,7 +41,7 @@ namespace Assets
         public static byte[] GetBitmapFromURL(string apiSource)
         {
             // Create a request for the URL.   
-            var request = WebRequest.Create(new Uri(GameUri + apiSource));
+            var request = WebRequest.Create(new Uri(GameUri + "media/" + apiSource));
             Debug.Log(GameUri + apiSource);
             // If required by the server, set the credentials.  
             request.Credentials = CredentialCache.DefaultCredentials;
