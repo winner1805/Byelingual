@@ -10,28 +10,10 @@ namespace Assets
 {
     public class GameController : MonoBehaviour
     {
-        //Scenes
-        private Scene _mainMenuScene;
-        private Scene _storyTemplateScene;
         
-        //Canvases
+        private List<Story> _stories;
         private Canvas _mainMenu;
         private Canvas _story1Intro;
-
-        //Buttons
-        private Button _exitButton;
-
-        private Button _buttonS1Int;
-
-        //Only for testing
-        private Button _story1Button;
-
-        //UnityActions
-        private UnityAction _exit;
-        private UnityAction _exitStory1Intro;
-        private UnityAction _startStory1;
-        private List<Story> _stories;
-
 
         // Use this for initialization
         private void Start()
@@ -39,24 +21,9 @@ namespace Assets
             //
             
 
-            var jsonString = Resources.GetStringResponse("stories");
+            
             _stories = new List<Story>();
-            var jsonStories = JSON.Parse(jsonString);
-
-
-
-
-            var storyCount = jsonStories["stories"].Count;
-            for (var i = 0; i < storyCount; i++)
-            {
-                _stories.Add(
-                    new Story(
-                        jsonStories["stories"][i]["name"].ToString(),
-                        jsonStories["stories"][i]["description"].ToString(),
-                        jsonStories["stories"][i]["image"].ToString()
-                    )
-                );
-            }
+            _stories = Resources.GetStoriesFromInternet();
 
 
             var canvases = new List<Canvas>();
@@ -66,25 +33,43 @@ namespace Assets
 
             foreach (var story in _stories)
             {
-                canvases.Add(A.Canvas().Named(story + "Canvas"));
-                scenes.Add(A.Scene().Named(story + "Scene"));
-                buttons.Add(A.Button().Named("Load"+ story + "Button"));
-                sprites.Add(story.ToString(), IMG2Sprite.instance.LoadNewSprite("media/" + story.ImageUrl));
+                canvases.Add(A.Canvas().Named(story.SnakeCase() + "_canvas"));
+                scenes.Add(A.Scene().Named(story.SnakeCase() + "_scene"));
+                buttons.Add(A.Button().Named("Load"+ story.SnakeCase() + "_button"));
+                sprites.Add(story.ToString(), IMG2Sprite.instance(story.SnakeCase() + "_img").LoadNewSprite("media/" + story.ImageUrl));
                 
             }
 
-            var mainMenuScene = (Scene) A.Scene().Named("MainMenuScene");
+            //var mainMenuScene = (Scene) A.Scene().Named("MainMenuScene");
+            var mainMenuScene = SceneManager.GetSceneByName("MainMenuScene");
             
-            SceneManager.LoadScene("MainMenuScene");
-            if (mainMenuScene.isLoaded) { 
-                var mainMenuCanvas = (Canvas)A.Canvas().Named("MainMenuCanvas");
+            
+            SceneManager.SetActiveScene(mainMenuScene);
+           
+            var mainMenuCanvas = (Canvas)A.Canvas().Named("MainMenuCanvas");
+            _mainMenu = GameObject.Find("MainMenu").GetComponent<Canvas>();
+            
+
+
+            mainMenuCanvas.transform.SetAsLastSibling();
+            
+            SceneManager.MoveGameObjectToScene(mainMenuCanvas.gameObject, mainMenuScene);
+           
+            
+            //Debug.Log(mainMenuCanvas.isRootCanvas);
+                
+
                 foreach (var button in buttons)
                 {
-                    button.transform.SetParent(mainMenuCanvas.transform, false);
-
                     
+                    button.transform.SetParent(mainMenuCanvas.transform, false);
+                    button.enabled = true;
+                    button.image = new GameObject().AddComponent<Image>();
+                    button.image.sprite = sprites[_stories[0].ToString()];
+
+
                 }
-            }
+            
             /*
             //Canvas initialization
             _mainMenu = GameObject.Find("MainMenu").GetComponent<Canvas>();
@@ -110,6 +95,9 @@ namespace Assets
             //Only for testing
             _buttonS1Int.onClick.AddListener(_exitStory1Intro);*/
         }
+
+
+        
 
         // Update is called once per frame
         private void Update()

@@ -1,4 +1,5 @@
-﻿using Assets.StoryTemplate.Infrastructure;
+﻿using System.Collections.Generic;
+using Assets.StoryTemplate.Infrastructure;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ namespace Assets
     {
         private string _name;
         private string _description;
-        private Sprite _sprite;
+        private List<Sprite> _sprites;
         private Image _backgroundImage;
         private Canvas _titleCanvas;
         private string _imageUrl;
@@ -40,7 +41,7 @@ namespace Assets
 
         public Story WithSprite(Sprite sprite)
         {
-            _sprite = sprite;
+            _sprites.Add(sprite);
             return this;
         }
 
@@ -54,7 +55,11 @@ namespace Assets
         {
             return _name;
         }
-        
 
+
+        public string SnakeCase()
+        {
+            return ToString().Replace(' ', '_').ToLower();
+        }
     }
 }

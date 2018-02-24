@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using SimpleJSON;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,40 +9,32 @@ namespace Assets.StoryTemplate
 
         private List<Story> _stories;
         // Use this for initialization
-        void Start () {
-            var jsonString = Resources.GetStringResponse("stories");
+        void Start ()
+        {
             _stories = new List<Story>();
-            var jsonStories = JSON.Parse(jsonString);
-
-            
-            
-
-            var storyCount = jsonStories["stories"].Count;
-            for (var i = 0; i < storyCount; i++)
-            {
-                _stories.Add(
-                    new Story(
-                        jsonStories["stories"][i]["name"].ToString(),
-                        jsonStories["stories"][i]["description"].ToString(),
-                        jsonStories["stories"][i]["image"].ToString()
-                    )
-                );
-            }
+            _stories = Resources.GetStoriesFromInternet();
 
             var c = GameObject.Find("StoryCanvas").GetComponent<Canvas>();
             c.transform.SetAsLastSibling();
 
             var t = GameObject.Find("txStoryList").GetComponent<Text>();
             t.text = "";
+            if (_stories.Count > 0) { 
+                foreach (var story in _stories)
+                {
+                    t.text += story + "\n";
 
-            foreach (var story in _stories)
-            {
-                t.text += story + "\n";
+                }
 
             }
-
+            else
+            {
+                t.text = "No stories to list, please buy! \nOr just maybe if you're not connected to internet, try that first.";
+            }
         }
-	
+
+        
+
         // Update is called once per frame
         void Update () {
            

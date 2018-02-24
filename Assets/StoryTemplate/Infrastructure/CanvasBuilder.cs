@@ -5,14 +5,10 @@ namespace Assets.StoryTemplate.Infrastructure
     public class CanvasBuilder : TestBuilder<Canvas>
     {
 
-        private string _name = "UnnamedCanvas";
+        
 
-
-        public CanvasBuilder Named(string name)
-        {
-            _name = name;
-            return this;
-        }
+        
+       
 
         public override Canvas Build()
         {

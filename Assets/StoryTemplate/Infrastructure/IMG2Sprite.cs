@@ -18,22 +18,22 @@ namespace Assets.StoryTemplate.Infrastructure
 
         private static IMG2Sprite _instance;
 
-        public static IMG2Sprite instance
+        public static IMG2Sprite instance(string name)
         {
-            get
-            {
+            
                 //If _instance hasn't been set yet, we grab it from the scene!
                 //This will only happen the first time this reference is used.
 
                 if (_instance == null)
-                    _instance = GameObject.FindObjectOfType<IMG2Sprite>();
+                    _instance = new GameObject().AddComponent<IMG2Sprite>();
+            _instance.name = name.Replace(' ','_').ToLower();
                 return _instance;
-            }
+            
         }
 
         public Sprite LoadNewSprite(string mediaUrl, float PixelsPerUnit = 100.0f)
         {
-
+            
             // Load a PNG or JPG image from disk to a Texture2D, assign this texture to a new sprite and return its reference
 
             Sprite NewSprite = new Sprite();
@@ -54,11 +54,11 @@ namespace Assets.StoryTemplate.Infrastructure
 
             
             {
-                var bitmapFromUrl = Resources.GetBitmapFromURL(url);
-                bitmapFromUrl.Save(ms, bitmapFromUrl.RawFormat);
+                var bytes = Resources.GetBitmapFromURL(url);
+                
 
                 
-                if (Tex2D.LoadImage(ms.ToArray()))           // Load the imagedata into the texture (size is set automatically)
+                if (Tex2D.LoadImage(bytes))           // Load the imagedata into the texture (size is set automatically)
                     return Tex2D;                 // If data = readable -> return texture
             }
             return null;                     // Return null if load failed

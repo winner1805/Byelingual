@@ -33,7 +33,7 @@ namespace Assets.StoryTemplate.Editor
             public void _Image_Can_Be_Created()
             {
 
-                var image = (Image)An.Image().Named("TestImage");
+                var image = (Image) An.Image().Named("TestImage");
 
                 Assert.IsNotNull(image);
             }

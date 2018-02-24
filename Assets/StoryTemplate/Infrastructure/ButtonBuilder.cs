@@ -4,14 +4,9 @@ using UnityEngine.UI;
 
 public class ButtonBuilder : TestBuilder<Button>
 {
-    private string _name;
+    
 
-    public ButtonBuilder Named(string name)
-    {
-        _name = name;
-        return this;
-    }
-
+   
     public override Button Build()
     {
 

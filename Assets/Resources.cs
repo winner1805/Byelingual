@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Drawing;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using Debug = UnityEngine.Debug;
+using SimpleJSON;
+using UnityEngine;
+
 
 namespace Assets
 {
@@ -37,10 +38,11 @@ namespace Assets
             return responseFromServer;
         }
 
-        public static Bitmap GetBitmapFromURL(string apiSource)
+        public static byte[] GetBitmapFromURL(string apiSource)
         {
             // Create a request for the URL.   
             var request = WebRequest.Create(new Uri(GameUri + apiSource));
+            Debug.Log(GameUri + apiSource);
             // If required by the server, set the credentials.  
             request.Credentials = CredentialCache.DefaultCredentials;
             // Get the response.  
@@ -50,7 +52,8 @@ namespace Assets
             // Get the stream containing content returned by the server.  
             var dataStream = response.GetResponseStream();
             // Open the stream using a StreamReader for easy access.  
-            var bitmap = new Bitmap(dataStream);
+            byte[] bitmap= new byte[(int)dataStream.Length];
+            dataStream.Read(bitmap, 0, (int)dataStream.Length);
 
             // Clean up the streams and the response.  
             
@@ -62,6 +65,38 @@ namespace Assets
             return bitmap;
         }
 
-       
+        public static List<Story> GetStoriesFromInternet()
+        {
+            string jsonString;
+            var stories = new List<Story>();
+            try
+            {
+                jsonString = GetStringResponse("stories");
+            }
+            catch (WebException e)
+            {
+                Debug.Log(e.Message);
+                jsonString = "{}";
+            }
+
+            var jsonStories = JSON.Parse(jsonString);
+
+            var storyCount = jsonStories["stories"].Count;
+            if (storyCount > 0)
+                for (var i = 0; i < storyCount; i++)
+                {
+                    stories.Add(
+                        new Story(
+                            jsonStories["stories"][i]["name"],
+                            jsonStories["stories"][i]["description"],
+                            jsonStories["stories"][i]["image"]
+                        )
+                    );
+                }
+
+            return stories;
+        }
+
+
     }
 }

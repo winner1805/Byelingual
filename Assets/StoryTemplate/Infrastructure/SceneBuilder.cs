@@ -12,15 +12,9 @@ namespace Assets.StoryTemplate.Infrastructure
     public class SceneBuilder : TestBuilder<Scene>
     {
 
-        private string _name = "UnnamedScene";
+      
         private List<Button> _buttons;
 
-
-        public SceneBuilder Named(string name)
-        {
-            _name = name;
-            return this;
-        }
 
         public SceneBuilder WithButton(string name)
         {
@@ -34,5 +28,7 @@ namespace Assets.StoryTemplate.Infrastructure
             var scene = SceneManager.CreateScene(_name);
             return scene;
         }
+
+        
     }
 }
