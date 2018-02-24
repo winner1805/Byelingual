@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using Assets.StoryTemplate.Infrastructure;
-using SimpleJSON;
+﻿using Assets.StoryTemplate.Infrastructure;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
