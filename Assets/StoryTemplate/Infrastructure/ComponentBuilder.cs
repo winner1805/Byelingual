@@ -9,10 +9,14 @@ namespace Assets.StoryTemplate.Infrastructure
      *In ButtonBuilder class, override the Build() method to suit specific needs for button that differ from
      *other game objects, like button text
      *
+     * _name field to set a GameObject name
+     * Named(string) a method to set a GameObject name
+     * abstract Build - returns a component of type `T` with preset properties - for above example, a Button
      */
     public abstract class ComponentBuilder<T>
     {
         protected string _name;
+
         public abstract T Build();
 
         public ComponentBuilder<T> Named(string name)
