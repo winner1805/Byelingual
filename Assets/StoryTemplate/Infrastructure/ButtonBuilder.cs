@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonBuilder : TestBuilder<Button>
+public class ButtonBuilder : ComponentBuilder<Button>
 {
     
 

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Assets.StoryTemplate.Infrastructure
 {
-    public class SceneBuilder : TestBuilder<Scene>
+    public class SceneBuilder : ComponentBuilder<Scene>
     {
 
       

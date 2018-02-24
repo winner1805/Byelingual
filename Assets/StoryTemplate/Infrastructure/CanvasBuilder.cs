@@ -2,7 +2,7 @@
 
 namespace Assets.StoryTemplate.Infrastructure
 {
-    public class CanvasBuilder : TestBuilder<Canvas>
+    public class CanvasBuilder : ComponentBuilder<Canvas>
     {
 
         

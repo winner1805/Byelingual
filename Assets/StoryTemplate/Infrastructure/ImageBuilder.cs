@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Assets.StoryTemplate.Infrastructure
 {
-    public class ImageBuilder : TestBuilder<Image>
+    public class ImageBuilder : ComponentBuilder<Image>
     {
 
         public override Image Build()
