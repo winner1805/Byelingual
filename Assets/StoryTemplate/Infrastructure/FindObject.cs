@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.StoryTemplate.Infrastructure
 {
@@ -6,11 +7,17 @@ namespace Assets.StoryTemplate.Infrastructure
     {
         public static T Named(string name)
         {
-            return GameObject.Find(name).GetComponent<T>();
+            var obj = GameObject.Find(name).GetComponent<T>();
+            return obj;
         }
     }
 
     public class FindCanvas : FindObject<Canvas>
+    {
+
+    }
+
+    public class FindImage : FindObject<Image>
     {
 
     }

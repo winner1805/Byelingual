@@ -14,11 +14,11 @@ namespace Assets.StoryTemplate.Infrastructure
         // Drop it on any GameObject/Camera in your scene (singleton implementation)
         //
         // Usage from any other script:
-        // MySprite = IMG2Sprite.instance.LoadNewSprite(mediaUrl, [PixelsPerUnit (optional)])
+        // MySprite = IMG2Sprite.Instance.LoadNewSprite(mediaUrl, [PixelsPerUnit (optional)])
 
         private static IMG2Sprite _instance;
 
-        public static IMG2Sprite instance(string name)
+        public static IMG2Sprite Instance(string name)
         {
             
                 //If _instance hasn't been set yet, we grab it from the scene!

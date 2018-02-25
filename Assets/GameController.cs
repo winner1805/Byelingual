@@ -17,11 +17,16 @@ namespace Assets
         // Use this for initialization
         private void Start()
         {
+            _canvases = new List<Canvas>();
             //
             _stories = new List<Story>();
             _stories = Resources.GetStoriesFromInternet();
 
-
+            if (_stories.Count > 0)
+            {
+                FindImage.Named("ImageStory1").sprite = IMG2Sprite.Instance(_stories[0].SnakeCase() + "spriter").LoadNewSprite(_stories[0].ImageUrl);
+                FindImage.Named("ImageStory2").sprite = IMG2Sprite.Instance(_stories[1].SnakeCase() + "spriter").LoadNewSprite(_stories[1].ImageUrl);
+            }
 
            
             
