@@ -90,5 +90,11 @@ namespace Assets
                 canvas.enabled = false;
             }
         }
+
+        public void EnableCanvas(Canvas canvas)
+        {
+            DisableAllCanvases();
+            canvas.enabled = true;
+        }
     }
 }
