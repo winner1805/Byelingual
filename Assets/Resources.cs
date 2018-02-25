@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using SimpleJSON;
 using UnityEngine;
 
@@ -38,7 +39,7 @@ namespace Assets
             return responseFromServer;
         }
 
-        public static byte[] GetBitmapFromURL(string apiSource)
+        public static async Task<byte[]> GetBitmapFromURL(string apiSource)
         {
             // Create a request for the URL.   
             var request = WebRequest.Create(new Uri(GameUri + "media/" + apiSource));
@@ -46,7 +47,7 @@ namespace Assets
             // If required by the server, set the credentials.  
             request.Credentials = CredentialCache.DefaultCredentials;
             // Get the response.  
-            var response = request.GetResponse();
+            var response = await request.GetResponseAsync();
             // Display the status.  
             //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
             // Get the stream containing content returned by the server.  

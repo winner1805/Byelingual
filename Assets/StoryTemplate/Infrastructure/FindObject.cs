@@ -9,8 +9,9 @@ namespace Assets.StoryTemplate.Infrastructure
         {
             var obj = GameObject.Find(name).GetComponent<T>();
             return obj;
-
         }
+
+        
     }
 
     public class FindCanvas : FindObject<Canvas>
@@ -19,6 +20,11 @@ namespace Assets.StoryTemplate.Infrastructure
     }
 
     public class FindImage : FindObject<Image>
+    {
+
+    }
+
+    public class FindButton : FindObject<Button>
     {
 
     }

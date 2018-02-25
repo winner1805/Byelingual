@@ -1,6 +1,8 @@
 ﻿using Assets.StoryTemplate.Infrastructure;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -11,7 +13,8 @@ namespace Assets
         
         private List<Story> _stories;
         private List<Canvas> _canvases;
-
+        private bool _init = true;
+        
         
 
         // Use this for initialization
@@ -22,55 +25,65 @@ namespace Assets
             _stories = new List<Story>();
             _stories = Resources.GetStoriesFromInternet();
 
-            if (_stories.Count > 0)
-            {
-                FindImage.Named("ImageStory1").sprite = IMG2Sprite.Instance(_stories[0].SnakeCase() + "spriter").LoadNewSprite(_stories[0].ImageUrl);
-                FindImage.Named("ImageStory2").sprite = IMG2Sprite.Instance(_stories[1].SnakeCase() + "spriter").LoadNewSprite(_stories[1].ImageUrl);
-            }
+            var exitButton = FindButton.Named("ExitButton");
+            
+            exitButton.onClick.AddListener(ExitGame);
+            Debug.Log("x");
 
-           
-            
-            
             //Canvas initialization
             var mainMenuCanvas = FindCanvas.Named("MainMenuCanvas");
             _canvases.Add(mainMenuCanvas);
 
-            var story1Intro = FindCanvas.Named("Story1Intro");
-            _canvases.Add(story1Intro);
+
+            
+
 
 
             /*Button initialization
             _exitButton = GameObject.Find("btnExit").GetComponent<Button>();
-            _buttonS1Int = GameObject.Find("ButtonS1Int").GetComponent<Button>();
-            //Only for testing
-            _story1Button = GameObject.Find("btnStoryOne").GetComponent<Button>();
+            
 
             //Assigning Methods to Unity actions
             _exit += ExitGame;
-            _startStory1 += StartStory1;
-            //Only for testing
-            _exitStory1Intro += ExitStory1Intro;
-
+            
 
             //Assigning Unity actions to button Events
             _exitButton.onClick.AddListener(_exit);
-            _story1Button.onClick.AddListener(_startStory1);
-            //Only for testing
-            _buttonS1Int.onClick.AddListener(_exitStory1Intro);*/
+            */
+
         }
 
 
-        
+        private async void LoadButtons()
+        {
+            
+            if (_stories.Count > 0)
+            {
+                var a = IMG2Sprite.Instance(_stories[0].SnakeCase() + "spriter");
+                var b = IMG2Sprite.Instance(_stories[1].SnakeCase() + "spriter");
+                FindImage.Named("ImageStory1").sprite = await a.LoadNewSprite(_stories[0].ImageUrl);
+                FindImage.Named("ImageStory2").sprite = await b.LoadNewSprite(_stories[1].ImageUrl); 
+              
+            }
+            
+        }
 
         // Update is called once per frame
         private void Update()
         {
+            if (_init)
+            {
+                LoadButtons();
+                _init = false;
+            }
+            
         }
 
         
 
         private static void ExitGame()
         {
+            Debug.Log("Exit game");
             Application.Quit();
         }
 
