@@ -10,71 +10,31 @@ namespace Assets
     {
         
         private List<Story> _stories;
-        private Canvas _mainMenu;
+        private List<Canvas> _canvases;
+
         
 
         // Use this for initialization
         private void Start()
         {
             //
-            
-
-            
             _stories = new List<Story>();
             _stories = Resources.GetStoriesFromInternet();
 
 
-            var canvases = new List<Canvas>();
-            var scenes = new List<Scene>();
-            var buttons = new List<Button>();
-            var sprites = new Dictionary<string, Sprite>();
 
-            foreach (var story in _stories)
-            {
-                canvases.Add(A.Canvas().Named(story.SnakeCase() + "_canvas"));
-                scenes.Add(A.Scene().Named(story.SnakeCase() + "_scenes"));
-                buttons.Add(A.Button().Named("Load"+ story.SnakeCase() + "_button"));
-                sprites.Add(story.ToString(), IMG2Sprite.instance(story.SnakeCase() + "_sprite").LoadNewSprite(story.ImageUrl));
-                
-            }
-
-            //var mainMenuScene = (Scene) A.Scene().Named("MainMenuScene");
-            var mainMenuScene = SceneManager.GetSceneByName("MainMenuScene");
-            
-            
-            SceneManager.SetActiveScene(mainMenuScene);
-           
-            var mainMenuCanvas = (Canvas)A.Canvas().Named("MainMenuCanvas");
-            _mainMenu = GameObject.Find("MainMenu").GetComponent<Canvas>();
-            
-
-
-            mainMenuCanvas.transform.SetAsLastSibling();
-            
-            SceneManager.MoveGameObjectToScene(mainMenuCanvas.gameObject, mainMenuScene);
            
             
-            //Debug.Log(mainMenuCanvas.isRootCanvas);
-                
-
-                foreach (var button in buttons)
-                {
-                    
-                    button.transform.SetParent(mainMenuCanvas.transform, false);
-                    button.enabled = true;
-                    button.image = new GameObject().AddComponent<Image>();
-                    button.image.sprite = sprites[_stories[0].ToString()];
-
-
-                }
             
-            /*
             //Canvas initialization
-            _mainMenu = GameObject.Find("MainMenu").GetComponent<Canvas>();
-            _story1Intro = GameObject.Find("Story1Intro").GetComponent<Canvas>();
+            var mainMenuCanvas = FindCanvas.Named("MainMenuCanvas");
+            _canvases.Add(mainMenuCanvas);
+
+            var story1Intro = FindCanvas.Named("Story1Intro");
+            _canvases.Add(story1Intro);
 
 
-            //Button initialization
+            /*Button initialization
             _exitButton = GameObject.Find("btnExit").GetComponent<Button>();
             _buttonS1Int = GameObject.Find("ButtonS1Int").GetComponent<Button>();
             //Only for testing
@@ -106,22 +66,29 @@ namespace Assets
 
         private static void ExitGame()
         {
-            Debug.Log("Exiting Game");
             Application.Quit();
         }
 
         private void StartStory1()
         {
             //hiding main menu and showing the story 1 intro
-            _mainMenu.enabled = false;
+            DisableAllCanvases();
             //_story1Intro.enabled = true;
         }
 
         private void ExitStory1Intro()
         {
             //Remove this method - It's only for testing
-            _mainMenu.enabled = true;
+            DisableAllCanvases();
             //_story1Intro.enabled = false;
+        }
+
+        public void DisableAllCanvases()
+        {
+            foreach (var canvas in _canvases)
+            {
+                canvas.enabled = false;
+            }
         }
     }
 }

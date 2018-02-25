@@ -28,5 +28,13 @@ namespace Assets.Tests
 
             Assert.IsNotNull(testButton);
         }
+
+        [Test]
+        public void All_Canvases_Can_Be_Disabled()
+        {
+            GameController.DisableAllCanvases();
+
+            
+        }
     }
 }
