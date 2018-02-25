@@ -9,6 +9,7 @@ namespace Assets.StoryTemplate.Infrastructure
         {
             var obj = GameObject.Find(name).GetComponent<T>();
             return obj;
+
         }
     }
 
