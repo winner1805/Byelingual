@@ -11,7 +11,7 @@ namespace Assets
         
         private List<Story> _stories;
         private Canvas _mainMenu;
-        private Canvas _story1Intro;
+        
 
         // Use this for initialization
         private void Start()
@@ -114,14 +114,14 @@ namespace Assets
         {
             //hiding main menu and showing the story 1 intro
             _mainMenu.enabled = false;
-            _story1Intro.enabled = true;
+            //_story1Intro.enabled = true;
         }
 
         private void ExitStory1Intro()
         {
             //Remove this method - It's only for testing
             _mainMenu.enabled = true;
-            _story1Intro.enabled = false;
+            //_story1Intro.enabled = false;
         }
     }
 }
