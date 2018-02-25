@@ -1,9 +1,6 @@
 ﻿using Assets.StoryTemplate.Infrastructure;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets
@@ -12,7 +9,8 @@ namespace Assets
     {
         
         private List<Story> _stories;
-        private List<Canvas> _canvases;
+        private Dictionary<string, Canvas> _canvases;
+        private Dictionary<string, Image> _storyLaunchers;
         private bool _init = true;
         
         
@@ -20,19 +18,22 @@ namespace Assets
         // Use this for initialization
         private void Start()
         {
-            _canvases = new List<Canvas>();
-            //
+            _canvases = new Dictionary<string, Canvas>();
             _stories = new List<Story>();
             _stories = Resources.GetStoriesFromInternet();
 
-            var exitButton = FindButton.Named("ExitButton");
+            FindButton.Named("ExitButton").onClick.AddListener(ExitGame);
             
-            exitButton.onClick.AddListener(ExitGame);
-            Debug.Log("x");
 
             //Canvas initialization
             var mainMenuCanvas = FindCanvas.Named("MainMenuCanvas");
-            _canvases.Add(mainMenuCanvas);
+            _canvases["mainMenuCanvas"]=mainMenuCanvas;
+
+            foreach (var story in _stories)
+            {
+                _canvases[story.SnakeCase()] = A.Canvas().Named(story.SnakeCase() + "_canvas");
+                
+            }
 
 
             
@@ -62,10 +63,20 @@ namespace Assets
                 var a = IMG2Sprite.Instance(_stories[0].SnakeCase() + "spriter");
                 var b = IMG2Sprite.Instance(_stories[1].SnakeCase() + "spriter");
                 FindImage.Named("ImageStory1").sprite = await a.LoadNewSprite(_stories[0].ImageUrl);
-                FindImage.Named("ImageStory2").sprite = await b.LoadNewSprite(_stories[1].ImageUrl); 
-              
+                FindImage.Named("ImageStory1").name = _stories[0].SnakeCase();
+
+                FindImage.Named("ImageStory2").sprite = await b.LoadNewSprite(_stories[1].ImageUrl);
+                FindImage.Named("ImageStory2").name = _stories[1].SnakeCase();
+
             }
-            
+
+            foreach (var story in _stories)
+            {
+                FindImage.Named(story.SnakeCase()).gameObject.AddComponent<ClickAction>(new ClickAction(
+                    _canvases[story.SnakeCase() + "_canvas"], 
+                    _canvases
+                    ));
+            }
         }
 
         // Update is called once per frame
@@ -83,7 +94,7 @@ namespace Assets
 
         private static void ExitGame()
         {
-            Debug.Log("Exit game");
+            Debug.Log("Exiting game");
             Application.Quit();
         }
 
@@ -103,7 +114,7 @@ namespace Assets
 
         public void DisableAllCanvases()
         {
-            foreach (var canvas in _canvases)
+            foreach (var canvas in _canvases.Values)
             {
                 canvas.enabled = false;
             }
