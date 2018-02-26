@@ -72,10 +72,10 @@ namespace Assets
 
             foreach (var story in _stories)
             {
-                FindImage.Named(story.SnakeCase()).gameObject.AddComponent<ClickAction>(new ClickAction(
-                    _canvases[story.SnakeCase() + "_canvas"], 
-                    _canvases
-                    ));
+                var ca = new ClickAction(
+                    _canvases[story.SnakeCase() + "_canvas"],
+                    _canvases);
+                FindImage.Named(story.SnakeCase()).gameObject.AddComponent<ClickAction>();
             }
         }
 
