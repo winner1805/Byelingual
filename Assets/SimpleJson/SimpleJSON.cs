@@ -76,8 +76,8 @@
  *   be reused without major problems. If you have a lot null fields in your data it will help reduce
  *   the memory / garbage overhead. I also added a static setting (reuseSameInstance) to JSONNull
  *   (default is true) which will change the behaviour of "CreateOrGet". If you set this to false
- *   CreateOrGet will not reuse the cached instance but instead create a new JSONNull instance each time.
- *   I made the JSONNull constructor private so if you need to create an instance manually use
+ *   CreateOrGet will not reuse the cached Instance but instead create a new JSONNull Instance each time.
+ *   I made the JSONNull constructor private so if you need to create an Instance manually use
  *   JSONNull.CreateOrGet()
  * 
  * [2018-01-09 Update]

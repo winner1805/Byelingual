@@ -1,7 +1,6 @@
 ﻿using Assets.StoryTemplate.Infrastructure;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets
@@ -10,118 +9,118 @@ namespace Assets
     {
         
         private List<Story> _stories;
-        private Canvas _mainMenu;
-        private Canvas _story1Intro;
+        private Dictionary<string, Canvas> _canvases;
+        private Dictionary<string, Image> _storyLaunchers;
+        private bool _init = true;
+        
+        
 
         // Use this for initialization
         private void Start()
         {
-            //
-            
-
-            
+            _canvases = new Dictionary<string, Canvas>();
             _stories = new List<Story>();
             _stories = Resources.GetStoriesFromInternet();
 
+            FindButton.Named("ExitButton").onClick.AddListener(ExitGame);
+            
 
-            var canvases = new List<Canvas>();
-            var scenes = new List<Scene>();
-            var buttons = new List<Button>();
-            var sprites = new Dictionary<string, Sprite>();
+            //Canvas initialization
+            var mainMenuCanvas = FindCanvas.Named("MainMenuCanvas");
+            _canvases["mainMenuCanvas"]=mainMenuCanvas;
+
+            
 
             foreach (var story in _stories)
             {
-                canvases.Add(A.Canvas().Named(story.SnakeCase() + "_canvas"));
-                scenes.Add(A.Scene().Named(story.SnakeCase() + "_scenes"));
-                buttons.Add(A.Button().Named("Load"+ story.SnakeCase() + "_button"));
-                sprites.Add(story.ToString(), IMG2Sprite.instance(story.SnakeCase() + "_sprite").LoadNewSprite(story.ImageUrl));
-                
+                var cnv = Instantiate(FindCanvas.Named("StoryCanvas"));
+                cnv.name = story.SnakeCase() + "_canvas";
+                _canvases[story.SnakeCase()] = cnv;
+
             }
 
-            //var mainMenuScene = (Scene) A.Scene().Named("MainMenuScene");
-            var mainMenuScene = SceneManager.GetSceneByName("MainMenuScene");
-            
-            
-            SceneManager.SetActiveScene(mainMenuScene);
-           
-            var mainMenuCanvas = (Canvas)A.Canvas().Named("MainMenuCanvas");
-            _mainMenu = GameObject.Find("MainMenu").GetComponent<Canvas>();
+
             
 
 
-            mainMenuCanvas.transform.SetAsLastSibling();
-            
-            SceneManager.MoveGameObjectToScene(mainMenuCanvas.gameObject, mainMenuScene);
-           
-            
-            //Debug.Log(mainMenuCanvas.isRootCanvas);
-                
 
-                foreach (var button in buttons)
-                {
-                    
-                    button.transform.SetParent(mainMenuCanvas.transform, false);
-                    button.enabled = true;
-                    button.image = new GameObject().AddComponent<Image>();
-                    button.image.sprite = sprites[_stories[0].ToString()];
-
-
-                }
-            
-            /*
-            //Canvas initialization
-            _mainMenu = GameObject.Find("MainMenu").GetComponent<Canvas>();
-            _story1Intro = GameObject.Find("Story1Intro").GetComponent<Canvas>();
-
-
-            //Button initialization
+            /*Button initialization
             _exitButton = GameObject.Find("btnExit").GetComponent<Button>();
-            _buttonS1Int = GameObject.Find("ButtonS1Int").GetComponent<Button>();
-            //Only for testing
-            _story1Button = GameObject.Find("btnStoryOne").GetComponent<Button>();
+            
 
             //Assigning Methods to Unity actions
             _exit += ExitGame;
-            _startStory1 += StartStory1;
-            //Only for testing
-            _exitStory1Intro += ExitStory1Intro;
-
+            
 
             //Assigning Unity actions to button Events
             _exitButton.onClick.AddListener(_exit);
-            _story1Button.onClick.AddListener(_startStory1);
-            //Only for testing
-            _buttonS1Int.onClick.AddListener(_exitStory1Intro);*/
+            */
+
         }
 
 
-        
+        private async void LoadButtons()
+        {
+            
+            if (_stories.Count > 0)
+            {
+                var a = IMG2Sprite.Instance(_stories[0].SnakeCase() + "spriter");
+                var b = IMG2Sprite.Instance(_stories[1].SnakeCase() + "spriter");
+                FindImage.Named("ImageStory1").sprite = await a.LoadNewSprite(_stories[0].ImageUrl);
+                FindImage.Named("ImageStory1").name = _stories[0].SnakeCase();
+
+                FindImage.Named("ImageStory2").sprite = await b.LoadNewSprite(_stories[1].ImageUrl);
+                FindImage.Named("ImageStory2").name = _stories[1].SnakeCase();
+
+                foreach (var story in _stories)
+                {
+
+                    FindImage.Named(story.SnakeCase()).gameObject.AddComponent<LaunchGame>();
+                }
+
+            }
+
+           
+        }
 
         // Update is called once per frame
         private void Update()
         {
+            if (_init)
+            {
+                LoadButtons();
+                _init = false;
+            }
+            
         }
 
         
 
         private static void ExitGame()
         {
-            Debug.Log("Exiting Game");
+            Debug.Log("Exiting game");
             Application.Quit();
         }
 
-        private void StartStory1()
+      
+
+        public void DisableAllCanvases()
         {
-            //hiding main menu and showing the story 1 intro
-            _mainMenu.enabled = false;
-            _story1Intro.enabled = true;
+            foreach (var canvas in _canvases.Values)
+            {
+                canvas.enabled = false;
+            }
         }
 
-        private void ExitStory1Intro()
+        public void EnableCanvasByName(string name)
         {
-            //Remove this method - It's only for testing
-            _mainMenu.enabled = true;
-            _story1Intro.enabled = false;
+            EnableCanvas(FindCanvas.Named(name));
+        }
+
+        public void EnableCanvas(Canvas canvas)
+        {
+            DisableAllCanvases();
+            canvas.enabled = true;
         }
     }
 }

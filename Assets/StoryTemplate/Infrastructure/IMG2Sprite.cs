@@ -14,11 +14,11 @@ namespace Assets.StoryTemplate.Infrastructure
         // Drop it on any GameObject/Camera in your scene (singleton implementation)
         //
         // Usage from any other script:
-        // MySprite = IMG2Sprite.instance.LoadNewSprite(mediaUrl, [PixelsPerUnit (optional)])
+        // MySprite = IMG2Sprite.Instance.LoadNewSprite(mediaUrl, [PixelsPerUnit (optional)])
 
         private static IMG2Sprite _instance;
 
-        public static IMG2Sprite instance(string name)
+        public static IMG2Sprite Instance(string name)
         {
             
                 //If _instance hasn't been set yet, we grab it from the scene!
@@ -31,19 +31,19 @@ namespace Assets.StoryTemplate.Infrastructure
             
         }
 
-        public Sprite LoadNewSprite(string mediaUrl, float PixelsPerUnit = 100.0f)
+        public async Task<Sprite> LoadNewSprite(string mediaUrl, float PixelsPerUnit = 100.0f)
         {
             
             // Load a PNG or JPG image from disk to a Texture2D, assign this texture to a new sprite and return its reference
 
             Sprite NewSprite = new Sprite();
-            var SpriteTexture = LoadTexture(mediaUrl);
+            var SpriteTexture = await LoadTexture(mediaUrl);
             NewSprite = Sprite.Create(SpriteTexture, new Rect(0, 0, SpriteTexture.width, SpriteTexture.height), new Vector2(0, 0), PixelsPerUnit);
 
             return NewSprite;
         }
 
-        public static Texture2D LoadTexture(string url)
+        public static async Task<Texture2D> LoadTexture(string url)
         {
 
             // Load a PNG or JPG file from disk to a Texture2D
@@ -54,7 +54,7 @@ namespace Assets.StoryTemplate.Infrastructure
 
             
             {
-                var bytes = Resources.GetBitmapFromURL(url);
+                var bytes = await Resources.GetBitmapFromURL(url);
                 
 
                 

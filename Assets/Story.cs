@@ -10,7 +10,7 @@ namespace Assets
         private string _name;
         private string _description;
         private List<Sprite> _sprites;
-        private Image _backgroundImage;
+        private Image _introImage;
         private Canvas _titleCanvas;
         private string _imageUrl;
 
@@ -20,6 +20,8 @@ namespace Assets
             set {_imageUrl = value; }
         }
 
+
+
         public Story(string name, string description, string imageUrl)
         {
             _name = name;
@@ -27,15 +29,21 @@ namespace Assets
             _imageUrl = imageUrl;
         }
 
-        public Story WithCanvas(string name)
+        public Story WithANewCanvas(string name)
         {
             _titleCanvas = A.Canvas().Named(name);
             return this;
         }
 
+        public Story WithCanvas(Canvas canvas)
+        {
+            _titleCanvas = canvas;
+            return this;
+        }
+
         public Story WithImage(Image image)
         {
-            _backgroundImage = image;
+            _introImage = image;
             return this;
         }
 
@@ -49,6 +57,11 @@ namespace Assets
         public string Description
         {
             get { return _description; }
+        }
+
+        public Image IntroImage
+        {
+            get { return _introImage; }
         }
 
         public override string ToString()
