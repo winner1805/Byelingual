@@ -29,10 +29,14 @@ namespace Assets
             var mainMenuCanvas = FindCanvas.Named("MainMenuCanvas");
             _canvases["mainMenuCanvas"]=mainMenuCanvas;
 
+            
+
             foreach (var story in _stories)
             {
-                _canvases[story.SnakeCase()] = A.Canvas().Named(story.SnakeCase() + "_canvas");
-                
+                var cnv = Instantiate(FindCanvas.Named("StoryCanvas"));
+                cnv.name = story.SnakeCase() + "_canvas";
+                _canvases[story.SnakeCase()] = cnv;
+
             }
 
 
@@ -68,15 +72,15 @@ namespace Assets
                 FindImage.Named("ImageStory2").sprite = await b.LoadNewSprite(_stories[1].ImageUrl);
                 FindImage.Named("ImageStory2").name = _stories[1].SnakeCase();
 
+                foreach (var story in _stories)
+                {
+
+                    FindImage.Named(story.SnakeCase()).gameObject.AddComponent<LaunchGame>();
+                }
+
             }
 
-            foreach (var story in _stories)
-            {
-                var ca = new ClickAction(
-                    _canvases[story.SnakeCase() + "_canvas"],
-                    _canvases);
-                FindImage.Named(story.SnakeCase()).gameObject.AddComponent<ClickAction>();
-            }
+           
         }
 
         // Update is called once per frame
@@ -98,19 +102,7 @@ namespace Assets
             Application.Quit();
         }
 
-        private void StartStory1()
-        {
-            //hiding main menu and showing the story 1 intro
-            DisableAllCanvases();
-            //_story1Intro.enabled = true;
-        }
-
-        private void ExitStory1Intro()
-        {
-            //Remove this method - It's only for testing
-            DisableAllCanvases();
-            //_story1Intro.enabled = false;
-        }
+      
 
         public void DisableAllCanvases()
         {
@@ -118,6 +110,11 @@ namespace Assets
             {
                 canvas.enabled = false;
             }
+        }
+
+        public void EnableCanvasByName(string name)
+        {
+            EnableCanvas(FindCanvas.Named(name));
         }
 
         public void EnableCanvas(Canvas canvas)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -6,30 +7,42 @@ namespace Assets.StoryTemplate.Infrastructure
 {
     public class ClickAction : MonoBehaviour, IPointerClickHandler
     {
-        private readonly Canvas _target;
-        private readonly Dictionary<string, Canvas> _canvases;
-        public ClickAction(Canvas target, Dictionary<string, Canvas> canvases)
+
+        public virtual void OnPointerClick(PointerEventData eventData)
         {
-            _canvases = canvases;
-            _target = target;
-        }
-
-
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            foreach (var canvas in _canvases.Values)
-            {
-                canvas.enabled = false;
-
-            }
-
-            _target.enabled = true;
-
+           
         }
     }
 
-    public class ClickActionBuilder : ComponentBuilder<ClickAction>
+    public class LaunchGame : ClickAction
+    {
+        public override void OnPointerClick(PointerEventData eventData)
+        {
+            var canvases = GetComponentsInParent<Canvas>();
+            foreach (var canvas in canvases)
+            {
+                if (canvas.enabled) canvas.enabled = false;
+            }
+
+            var gameCanvas = (Canvas) FindCanvas.Named(gameObject.name + "_canvas");
+            gameCanvas.enabled = true;
+
+
+            var panel = FindPanel.GO("ControlBar");
+            panel.transform.SetParent(gameCanvas.transform);
+            
+
+            
+            panel.transform.SetAsLastSibling();
+          
+
+            
+
+
+
+        }
+    }
+   /* public class ClickActionBuilder : ComponentBuilder<ClickAction>
     {
         private Canvas _target;
         private Dictionary<string, Canvas> _canvases;
@@ -60,5 +73,5 @@ namespace Assets.StoryTemplate.Infrastructure
             return ca;
 
         }
-    }
+    }*/
 }

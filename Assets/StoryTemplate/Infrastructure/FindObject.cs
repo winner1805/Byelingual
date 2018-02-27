@@ -11,10 +11,21 @@ namespace Assets.StoryTemplate.Infrastructure
             return obj;
         }
 
+        public static GameObject GO(string name)
+        {
+            var obj = GameObject.Find(name);
+            return obj;
+        }
+
         
     }
 
     public class FindCanvas : FindObject<Canvas>
+    {
+
+    }
+
+    public class FindCamera : FindObject<Camera>
     {
 
     }
@@ -27,5 +38,10 @@ namespace Assets.StoryTemplate.Infrastructure
     public class FindButton : FindObject<Button>
     {
 
+    }
+
+    public class FindPanel : FindObject<GameObject>
+    {
+        //for semantic purposes
     }
 }

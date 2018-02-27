@@ -53,15 +53,16 @@ namespace Assets
             // Get the stream containing content returned by the server.  
             var dataStream = response.GetResponseStream();
             // Open the stream using a StreamReader for easy access.  
-            var bitmap = new byte[(int)dataStream.Length+10];
+            var bitmap = new byte[(int)dataStream.Length+1000];
             var numBytesToRead = (int)dataStream.Length;
             var numBytesRead = 0;
             do
             {
                 // Read may return anything from 0 to 10.
-                var n = dataStream.Read(bitmap, numBytesRead, 10);
+                var n = dataStream.Read(bitmap, numBytesRead,1000);
                 numBytesRead += n;
                 numBytesToRead -= n;
+                
             } while (numBytesToRead > 0);
             // Clean up the streams and the response.  
 
