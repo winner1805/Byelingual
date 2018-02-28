@@ -58,6 +58,14 @@ namespace Assets
 
         }
 
+        public void BackToMainMenu()
+        {
+            DisableAllCanvases();
+            var mm = FindCanvas.Named("MainMenuCanvas");
+            EnableCanvas(mm);
+            FindPanel.GO("ControlBar").transform.SetParent(mm.transform);
+            Destroy(FindButton.Named("BackButton").gameObject);
+        }
 
         private async void LoadButtons()
         {

@@ -40,6 +40,11 @@ namespace Assets.StoryTemplate.Infrastructure
 
     }
 
+    public class FindGameController : FindObject<GameController>
+    {
+
+    }
+
     public class FindPanel : FindObject<GameObject>
     {
         //for semantic purposes

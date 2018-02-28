@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Assets.StoryTemplate.Infrastructure
 {
@@ -18,11 +17,8 @@ namespace Assets.StoryTemplate.Infrastructure
     {
         public override void OnPointerClick(PointerEventData eventData)
         {
-            var canvases = GetComponentsInParent<Canvas>();
-            foreach (var canvas in canvases)
-            {
-                if (canvas.enabled) canvas.enabled = false;
-            }
+            var gc = FindGameController.Named("GameController");
+            gc.DisableAllCanvases();
 
             var gameCanvas = (Canvas) FindCanvas.Named(gameObject.name + "_canvas");
             gameCanvas.enabled = true;
@@ -30,48 +26,29 @@ namespace Assets.StoryTemplate.Infrastructure
 
             var panel = FindPanel.GO("ControlBar");
             panel.transform.SetParent(gameCanvas.transform);
+            var backButton = Instantiate(panel.GetComponentInChildren<Button>(), panel.transform,true);
+            backButton.name = "BackButton";
+            backButton.transform.SetParent(panel.transform);
+
+            backButton.gameObject.GetComponentInChildren<Text>().text = "Back";
+            //backButton.transform.position.Set(-2.0f,0, 0);
+            backButton.transform.Translate(-200f,0,9);
+            backButton.onClick.AddListener(gc.BackToMainMenu);
             
 
-            
+
             panel.transform.SetAsLastSibling();
-          
+            return;
 
             
+            
+
+
 
 
 
         }
     }
-   /* public class ClickActionBuilder : ComponentBuilder<ClickAction>
-    {
-        private Canvas _target;
-        private Dictionary<string, Canvas> _canvases;
+   
 
-        public ClickActionBuilder(string name, Canvas target, Dictionary<string, Canvas> canvases)
-        {
-            _name = name;
-            _target = target;
-            _canvases = canvases;
-        }
-
-        public ClickActionBuilder TargettingCanvas(Canvas target)
-        {
-            _target = target;
-            return this;
-        }
-
-        public ClickActionBuilder ControlsCanvases(Dictionary<string, Canvas> canvases)
-        {
-            _canvases = canvases;
-            return this;
-        }
-
-        public override ClickAction Build()
-        {
-
-            var ca = new ClickAction(_target, _canvases) {name = _name};
-            return ca;
-
-        }
-    }*/
 }
