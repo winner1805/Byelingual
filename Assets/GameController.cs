@@ -1,4 +1,5 @@
-﻿using Assets.StoryTemplate.Infrastructure;
+﻿using System.Collections;
+using Assets.StoryTemplate.Infrastructure;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,7 +15,8 @@ namespace Assets
         private Dictionary<string, Image> _storyLaunchers;
         private bool _init = true;
         private Story _currentStory;
-        
+        private List<GameObject> _panels;
+
 
         public Story CurrentStory
         {
@@ -33,6 +35,13 @@ namespace Assets
         {
             _canvases = new Dictionary<string, Canvas>();
             _stories = new Dictionary<string, Story>();
+
+            _panels = new List<GameObject>();
+
+            FillPanels();
+            
+            ShowPanel(FindPanel.GO("ControlBar"));
+
             _stories = Resources.GetStoriesFromInternet();
 
             FindButton.Named("ExitButton").onClick.AddListener(ExitGame);
@@ -73,12 +82,22 @@ namespace Assets
 
         }
 
+        private void FillPanels()
+        {
+            _panels.Add(FindPanel.GO("ControlBar"));
+            _panels.Add(FindPanel.GO("ControlBarText"));
+            _panels.Add(FindPanel.GO("ControlBarImage"));
+            _panels.Add(FindPanel.GO("ControlBarImageDragDrop"));
+        }
+
         public void BackToMainMenu()
         {
             DisableAllCanvases();
             var mm = FindCanvas.Named("MainMenuCanvas");
             EnableCanvas(mm);
-            FindPanel.GO("ControlBar").transform.SetParent(mm.transform);
+            var panel = FindPanel.GO("ControlBar");
+            panel.transform.SetParent(mm.transform);
+            ShowPanel(panel,Color.grey);
             Destroy(FindButton.Named("BackButton").gameObject);
         }
 
@@ -135,6 +154,26 @@ namespace Assets
             {
                 canvas.enabled = false;
             }
+        }
+
+        public void HideAllPanels()
+        {
+            foreach (var panel in _panels)
+            {
+                panel.transform.SetAsFirstSibling();
+            }
+        }
+
+        public void ShowPanel(GameObject panel)
+        {
+           ShowPanel(panel, Color.black);
+        }
+
+        public void ShowPanel(GameObject panel, Color color)
+        {
+            HideAllPanels();
+            panel.transform.SetAsLastSibling();
+            panel.transform.GetComponent<Image>().color = color;
         }
 
         public void EnableCanvasByName(string name)
