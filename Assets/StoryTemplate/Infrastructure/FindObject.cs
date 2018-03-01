@@ -49,4 +49,9 @@ namespace Assets.StoryTemplate.Infrastructure
     {
         //for semantic purposes
     }
+
+    public class FindText : FindObject<Text>
+    {
+
+    }
 }

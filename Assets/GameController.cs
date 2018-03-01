@@ -27,6 +27,8 @@ namespace Assets
 
             //Canvas initialization
             var mainMenuCanvas = FindCanvas.Named("MainMenuCanvas");
+            
+            mainMenuCanvas.transform.SetAsLastSibling();
             _canvases["mainMenuCanvas"]=mainMenuCanvas;
 
             
@@ -94,8 +96,10 @@ namespace Assets
         // Update is called once per frame
         private void Update()
         {
+
             if (_init)
             {
+                EnableCanvas(FindCanvas.Named("MainMenuCanvas"));
                 LoadButtons();
                 _init = false;
             }

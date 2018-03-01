@@ -18,10 +18,12 @@ namespace Assets.StoryTemplate.Infrastructure
         public override void OnPointerClick(PointerEventData eventData)
         {
             var gc = FindGameController.Named("GameController");
-            gc.DisableAllCanvases();
 
-            var gameCanvas = (Canvas) FindCanvas.Named(gameObject.name + "_canvas");
-            gameCanvas.enabled = true;
+
+            var gameCanvas = (Canvas)FindCanvas.Named(gameObject.name + "_canvas");
+            gc.EnableCanvas(gameCanvas);
+            //gameCanvas.enabled = true;
+
 
 
             var panel = FindPanel.GO("ControlBar");
