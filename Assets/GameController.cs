@@ -1,5 +1,6 @@
 ﻿using Assets.StoryTemplate.Infrastructure;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,18 +9,30 @@ namespace Assets
     public class GameController : MonoBehaviour
     {
         
-        private List<Story> _stories;
+        private Dictionary<string, Story> _stories;
         private Dictionary<string, Canvas> _canvases;
         private Dictionary<string, Image> _storyLaunchers;
         private bool _init = true;
+        private Story _currentStory;
         
-        
+
+        public Story CurrentStory
+        {
+            get { return _currentStory; }
+            set { _currentStory = value; }
+        }
+
+        public Dictionary<string, Story> Stories
+        {
+            get { return _stories; }
+        }
+
 
         // Use this for initialization
         private void Start()
         {
             _canvases = new Dictionary<string, Canvas>();
-            _stories = new List<Story>();
+            _stories = new Dictionary<string, Story>();
             _stories = Resources.GetStoriesFromInternet();
 
             FindButton.Named("ExitButton").onClick.AddListener(ExitGame);
@@ -33,7 +46,7 @@ namespace Assets
 
             
 
-            foreach (var story in _stories)
+            foreach (var story in Stories.Values)
             {
                 var cnv = Instantiate(FindCanvas.Named("StoryCanvas"));
                 cnv.name = story.SnakeCase() + "_canvas";
@@ -72,17 +85,17 @@ namespace Assets
         private async void LoadButtons()
         {
             
-            if (_stories.Count > 0)
+            if (Stories.Count > 0) //a hack, have to refactor at some point
             {
-                var a = IMG2Sprite.Instance(_stories[0].SnakeCase() + "spriter");
-                var b = IMG2Sprite.Instance(_stories[1].SnakeCase() + "spriter");
-                FindImage.Named("ImageStory1").sprite = await a.LoadNewSprite(_stories[0].ImageUrl);
-                FindImage.Named("ImageStory1").name = _stories[0].SnakeCase();
+                var a = IMG2Sprite.Instance(Stories.Values.ElementAt(0).SnakeCase() + "spriter");
+                var b = IMG2Sprite.Instance(Stories.Values.ElementAt(1).SnakeCase() + "spriter");
+                FindImage.Named("ImageStory1").sprite = await a.LoadNewSprite(Stories.Values.ElementAt(0).ImageUrl);
+                FindImage.Named("ImageStory1").name = Stories.Values.ElementAt(0).SnakeCase();
 
-                FindImage.Named("ImageStory2").sprite = await b.LoadNewSprite(_stories[1].ImageUrl);
-                FindImage.Named("ImageStory2").name = _stories[1].SnakeCase();
+                FindImage.Named("ImageStory2").sprite = await b.LoadNewSprite(Stories.Values.ElementAt(1).ImageUrl);
+                FindImage.Named("ImageStory2").name = Stories.Values.ElementAt(1).SnakeCase();
 
-                foreach (var story in _stories)
+                foreach (var story in Stories.Values)
                 {
 
                     FindImage.Named(story.SnakeCase()).gameObject.AddComponent<LaunchGame>();

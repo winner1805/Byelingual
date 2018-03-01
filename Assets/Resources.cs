@@ -74,10 +74,10 @@ namespace Assets
             return bitmap;
         }
 
-        public static List<Story> GetStoriesFromInternet()
+        public static Dictionary<string, Story> GetStoriesFromInternet()
         {
             string jsonString;
-            var stories = new List<Story>();
+            var stories = new Dictionary<string, Story>();
             try
             {
                 jsonString = GetStringResponse("stories");
@@ -94,13 +94,12 @@ namespace Assets
             if (storyCount > 0)
                 for (var i = 0; i < storyCount; i++)
                 {
-                    stories.Add(
-                        new Story(
-                            jsonStories["stories"][i]["name"],
-                            jsonStories["stories"][i]["description"],
-                            jsonStories["stories"][i]["image"]
-                        )
+                    var story = new Story(
+                        jsonStories["stories"][i]["name"],
+                        jsonStories["stories"][i]["description"],
+                        jsonStories["stories"][i]["image"]
                     );
+                    stories[story.SnakeCase()]=story;
                 }
 
             return stories;

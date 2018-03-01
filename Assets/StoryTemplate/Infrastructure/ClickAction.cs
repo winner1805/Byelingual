@@ -18,13 +18,15 @@ namespace Assets.StoryTemplate.Infrastructure
         public override void OnPointerClick(PointerEventData eventData)
         {
             var gc = FindGameController.Named("GameController");
+            
 
 
             var gameCanvas = (Canvas)FindCanvas.Named(gameObject.name + "_canvas");
             gc.EnableCanvas(gameCanvas);
-            //gameCanvas.enabled = true;
-            //FindText.Named("GameTitle").text = gameCanvas.name;
-            gameCanvas.transform.Find("GameTitle").GetComponent<Text>().text = gameCanvas.name.Remove(gameCanvas.name.LastIndexOf('_')).Replace("_"," ").ToUpperInvariant();
+
+            gc.CurrentStory = gc.Stories[gameCanvas.name.Remove(gameCanvas.name.LastIndexOf('_'))];
+            gameCanvas.transform.Find("GameTitle").GetComponent<Text>().text = gc.CurrentStory.ToString();
+
 
             var panel = FindPanel.GO("ControlBar");
             panel.transform.SetParent(gameCanvas.transform);
@@ -33,8 +35,8 @@ namespace Assets.StoryTemplate.Infrastructure
             backButton.transform.SetParent(panel.transform);
 
             backButton.gameObject.GetComponentInChildren<Text>().text = "Back";
-            //backButton.transform.position.Set(-2.0f,0, 0);
-            backButton.transform.Translate(-200f,0,9);
+            
+            backButton.transform.Translate(-600f,0,0);
             backButton.onClick.AddListener(gc.BackToMainMenu);
             
 
