@@ -23,8 +23,8 @@ namespace Assets.StoryTemplate.Infrastructure
             var gameCanvas = (Canvas)FindCanvas.Named(gameObject.name + "_canvas");
             gc.EnableCanvas(gameCanvas);
             //gameCanvas.enabled = true;
-
-
+            //FindText.Named("GameTitle").text = gameCanvas.name;
+            gameCanvas.transform.Find("GameTitle").GetComponent<Text>().text = gameCanvas.name.Remove(gameCanvas.name.LastIndexOf('_')).Replace("_"," ").ToUpperInvariant();
 
             var panel = FindPanel.GO("ControlBar");
             panel.transform.SetParent(gameCanvas.transform);
