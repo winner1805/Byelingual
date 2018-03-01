@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using Assets.StoryTemplate.Infrastructure;
 using SimpleJSON;
 using UnityEngine;
 
@@ -98,7 +99,11 @@ namespace Assets
                         jsonStories["stories"][i]["name"],
                         jsonStories["stories"][i]["description"],
                         jsonStories["stories"][i]["image"]
-                    );
+                    ).WithImage(
+                        An.Image().Named(
+                            jsonStories["stories"][i]["name"]
+                            )
+                        );
                     stories[story.SnakeCase()]=story;
                 }
 

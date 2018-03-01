@@ -27,6 +27,7 @@ namespace Assets
             _name = name;
             _description = description;
             _imageUrl = imageUrl;
+            
         }
 
         public Story WithANewCanvas(string name)
@@ -44,6 +45,7 @@ namespace Assets
         public Story WithImage(Image image)
         {
             _introImage = image;
+            _introImage.color = Color.black;
             return this;
         }
 
@@ -63,6 +65,8 @@ namespace Assets
         {
             get { return _introImage; }
         }
+
+
 
         public override string ToString()
         {
