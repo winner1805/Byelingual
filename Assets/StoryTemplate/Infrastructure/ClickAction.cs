@@ -17,40 +17,40 @@ namespace Assets.StoryTemplate.Infrastructure
     {
         public override void OnPointerClick(PointerEventData eventData)
         {
+            //take control of the game controller
             var gc = FindGameController.Named("GameController");
+
+            //find the current game canvas
+            var gameCanvas = FindCanvas.Named(gameObject.name + "_canvas");
             
-
-
-            var gameCanvas = (Canvas)FindCanvas.Named(gameObject.name + "_canvas");
+            //bring game canvas to front
             gc.EnableCanvas(gameCanvas);
+            
+            //set game controller's current story to the correct story from the Dictionary
+            gc.CurrentStory = gc.Stories[gameObject.name];
+            //and assign it to a local variable just for more readable code
+            var currentStory = gc.CurrentStory;
 
-            gc.CurrentStory = gc.Stories[gameCanvas.name.Remove(gameCanvas.name.LastIndexOf('_'))];
-            gameCanvas.transform.Find("GameTitle").GetComponent<Text>().text = gc.CurrentStory.ToString();
+            //Find GameTitle text in Game canvas, and set it to the currentStory name
+            gameCanvas.transform.Find("GameTitle").GetComponent<Text>().text = currentStory.ToString();
 
-
+            //move the ControlBar to the game canvas
             var panel = FindPanel.GO("ControlBar");
             panel.transform.SetParent(gameCanvas.transform);
-            var backButton = Instantiate(panel.GetComponentInChildren<Button>(), panel.transform,true);
+            panel.transform.SetAsLastSibling();
+
+            //copy the exit button, place it on the panel, rename and relabel
+            var backButton = Instantiate(panel.GetComponentInChildren<Button>(), panel.transform, true);
             backButton.name = "BackButton";
             backButton.transform.SetParent(panel.transform);
-
             backButton.gameObject.GetComponentInChildren<Text>().text = "Back";
-            
-            backButton.transform.Translate(-600f,0,0);
+            //move button a bit to the left
+            backButton.transform.Translate(-400f,0,0);
+            //apply the game controller action to the back button
             backButton.onClick.AddListener(gc.BackToMainMenu);
-            
 
-
-            panel.transform.SetAsLastSibling();
-            return;
 
             
-            
-
-
-
-
-
         }
     }
    
