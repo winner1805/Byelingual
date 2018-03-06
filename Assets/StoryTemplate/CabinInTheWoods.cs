@@ -28,6 +28,7 @@ namespace Assets
         public void ProcessChoice(string choice)
         {
             choices.Add(choice);
+            _gc.SaveGame();
             
         }
 
