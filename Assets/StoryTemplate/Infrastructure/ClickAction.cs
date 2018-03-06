@@ -61,7 +61,10 @@ namespace Assets.StoryTemplate.Infrastructure
             //apply the game controller action to the back button
             backButton.onClick.AddListener(gc.BackToMainMenu);
 
-
+            if (gc.CurrentStory.SnakeCase() == "cabin_in_the_woods")
+            {
+                gc.CabinInTheWoods.PlayIntro();
+            }
             
         }
     }
