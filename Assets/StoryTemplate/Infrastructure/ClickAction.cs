@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -66,6 +67,19 @@ namespace Assets.StoryTemplate.Infrastructure
                 gc.CabinInTheWoods.PlayIntro();
             }
             
+        }
+    }
+
+    public class SaveChoice : ClickAction
+    {
+        public override void OnPointerClick(PointerEventData eventData)
+        {
+            var gc = FindGameController.Named("GameController");
+
+            //game controller / cabininthewoods / List<string> choices
+            gc.CabinInTheWoods.ProcessChoice(gameObject.name);
+            
+
         }
     }
    

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Assets.StoryTemplate.Infrastructure;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ namespace Assets
         private Sprite _fireSprite;
         private GameController _gc;
         private Canvas _canvas;
+        public List<string> choices;
 
         public CabinInTheWoods(string name, string description, string imageUrl) : base(name, description, imageUrl)
         {
@@ -18,7 +20,14 @@ namespace Assets
             _handsSprite = FindSprite.InResources("placeholder_hands");
             _fireSprite = FindSprite.InResources("placeholder_wood-burning_stove");
             _canvas = FindCanvas.Named(_gc.Stories.Values.ElementAt(0).SnakeCase() + "_canvas");
+            
 
+        }
+
+        public void ProcessChoice(string choice)
+        {
+            choices.Add(choice);
+            
         }
 
         public void PlayIntro()
@@ -33,6 +42,12 @@ namespace Assets
 
             image1.sprite = _handsSprite;
             image2.sprite = _fireSprite;
+
+            image1.name = "Hands";
+            image2.name = "Fire";
+
+            image1.gameObject.AddComponent<SaveChoice>();
+            image2.gameObject.AddComponent<SaveChoice>();
 
             VisualEffects.SetImageTransparent(image1);
             VisualEffects.SetImageTransparent(image2);
