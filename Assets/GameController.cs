@@ -10,20 +10,21 @@ namespace Assets
     public class GameController : MonoBehaviour
     {
         
-        private Dictionary<string, Story> _stories;
-        private Dictionary<string, Canvas> _canvases;
-        private bool _init = true;
-        private Story _currentStory;
-        private List<GameObject> _panels;
-        private List<Image> _elementsToCrossfade;
+        private Dictionary<string, Story> _stories; //list of stories available in the platform
+        private bool _init = true; //flag for async methods that run on first update frame
+        private Story _currentStory; //currently active story
+        private Dictionary<string, Canvas> _canvases; //list of canvases to loop through when disabling them
+        private List<GameObject> _panels; //list of game panels
+        private List<GameObject> _elementsToCrossfade; //list of elements for visual transition
 
-
+        //Current story property
         public Story CurrentStory
         {
             get { return _currentStory; }
             set { _currentStory = value; }
         }
 
+        //Stories property - returns the list of locally available stories
         public Dictionary<string, Story> Stories
         {
             get { return _stories; }
@@ -33,19 +34,29 @@ namespace Assets
         // Use this for initialization
         private void Start()
         {
+            //Initialazing lists
             _canvases = new Dictionary<string, Canvas>();
             _stories = new Dictionary<string, Story>();
-
             _panels = new List<GameObject>();
-            _elementsToCrossfade = new List<Image>();
+            _elementsToCrossfade = new List<GameObject>();
 
+            //add panels to the list
             FillPanels();
             
+            //show the main menu control bar
             ShowPanel(FindPanel.GO("ControlBar"));
 
+            //get stories from internet
             _stories = Resources.GetStoriesFromInternet();
 
+            // add ExitGame callback to ExitButton listener
             FindButton.Named("ExitButton").onClick.AddListener(ExitGame);
+            
+            //Testing text transition (fade in)
+            var text = FindText.Named("TextGameTitle");
+            VisualEffects.SetTextTransparent(text);
+            _elementsToCrossfade.Add(text.gameObject);
+
             
 
             //Canvas initialization
@@ -114,13 +125,13 @@ namespace Assets
                 ImageStory1.sprite = await a.LoadNewSprite(Stories.Values.ElementAt(0).ImageUrl);
                 ImageStory1.name = Stories.Values.ElementAt(0).SnakeCase();
                 VisualEffects.SetImageTransparent(ImageStory1);
-                _elementsToCrossfade.Add(ImageStory1);
+                _elementsToCrossfade.Add(ImageStory1.gameObject);
 
                 var ImageStory2 = FindImage.Named("ImageStory2");
                 ImageStory2.sprite = await b.LoadNewSprite(Stories.Values.ElementAt(1).ImageUrl);
                 ImageStory2.name = Stories.Values.ElementAt(1).SnakeCase();
                 VisualEffects.SetImageTransparent(ImageStory2);
-                _elementsToCrossfade.Add(ImageStory2);
+                _elementsToCrossfade.Add(ImageStory2.gameObject);
 
                 foreach (var story in Stories.Values)
                 {
@@ -150,19 +161,43 @@ namespace Assets
 
         private void CrossFadeElements()
         {
-            var itemsToRemove = new List<Image>();
+            //container of items to remove from crossfade list once the item completes the transition
+            var itemsToRemove = new List<GameObject>();
+
+            //go through the crossfade list
             foreach (var element in _elementsToCrossfade)
             {
-                VisualEffects.ImageFadeIn(element, 1.0f, 0.8f);
-                if (Math.Abs(element.color.a - 1.0f) < 0.0001)
+                //try to get an image from the gameObject element
+                var image = element.GetComponent<Image>();
+                //try to get a text from the gameObject element
+                var text = element.GetComponent<Text>();
+
+                //test if the element is image
+                if (image)
                 {
-                    itemsToRemove.Add(element);
+                    VisualEffects.ImageFadeIn(image, 1.0f, 0.8f);
+                    if (Math.Abs(image.color.a - 1.0f) < 0.0001)
+                    {
+                        itemsToRemove.Add(element);
+                    }
+                }//test if the element is text
+                else if (text)
+                {
+                    VisualEffects.TextFadeIn(text, 1.0f, 0.8f);
+                    if (Math.Abs(text.color.a - 1.0f) < 0.0001)
+                    {
+                        itemsToRemove.Add(element);
+                        
+                    }
                 }
+
+                
             }
-            //cleanup
-            foreach (var image in itemsToRemove)
+            //cleanup the elements which completed transition
+            foreach (var item in itemsToRemove)
             {
-                _elementsToCrossfade.Remove(image);
+                _elementsToCrossfade.Remove(item);
+                Debug.Log("object removed from fade list");
             }
 
 
