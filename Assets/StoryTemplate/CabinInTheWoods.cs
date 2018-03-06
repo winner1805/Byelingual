@@ -40,6 +40,15 @@ namespace Assets
             _gc.ElementsToCrossfade.Add(image1.gameObject);
             _gc.ElementsToCrossfade.Add(image2.gameObject);
 
+            _gc.DelayLoad(3);
+
+            var canvasBg = FindCanvas.Named(_gc.CurrentStory.SnakeCase() + "_canvas").GetComponent<Image>();
+            canvasBg.sprite = FindSprite.InResources("CabinInterior1");
+
+            //VisualEffects.SetImageTransparent(canvasBg);
+            VisualEffects.ImageFadeIn(canvasBg);
+            
+            _gc.ElementsToCrossfade.Add(canvasBg.gameObject);
         }
     }
 }

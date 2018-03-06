@@ -1,5 +1,6 @@
 ﻿using Assets.StoryTemplate.Infrastructure;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.StoryTemplate;
@@ -113,10 +114,10 @@ namespace Assets
         public void BackToMainMenu()
         {
             DisableAllCanvases();
-            var mm = FindCanvas.Named("MainMenuCanvas");
-            EnableCanvas(mm);
+            var canvas = FindCanvas.Named("MainMenuCanvas");
+            EnableCanvas(canvas);
             var panel = FindPanel.GO("ControlBar");
-            panel.transform.SetParent(mm.transform);
+            panel.transform.SetParent(canvas.transform);
             ShowPanel(panel,Color.grey);
             Destroy(FindButton.Named("BackButton").gameObject);
         }
@@ -265,6 +266,11 @@ namespace Assets
         {
             DisableAllCanvases();
             canvas.enabled = true;
+        }
+
+        public IEnumerator DelayLoad(int i)
+        {
+            yield return new WaitForSeconds(i);
         }
     }
 }

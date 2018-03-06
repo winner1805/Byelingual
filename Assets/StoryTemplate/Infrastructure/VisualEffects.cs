@@ -19,29 +19,29 @@ namespace Assets.StoryTemplate.Infrastructure
             return curColor;
         }
 
-        public static void ImageFadeIn(Image image, float targetAlpha=1f, float fadeRate=0.9f)
+        public static void ImageFadeIn(Image image, float targetAlpha=1f, float fadeRate=2f)
         {
-            SetImageTransparent(image);
+            //SetImageTransparent(image);
             image.color = Blush(image.color, targetAlpha, fadeRate);
             
         }
 
-        public static void TextFadeIn(Text text, float targetAlpha=1f, float fadeRate=0.9f)
+        public static void TextFadeIn(Text text, float targetAlpha=1f, float fadeRate=2f)
         {
-            SetTextTransparent(text);
+            //SetTextTransparent(text);
             text.color = Blush(text.color, targetAlpha, fadeRate);
 
         }
 
 
-        public static void ImageFadeOut(Image image, float targetAlpha = 0f, float fadeRate = 0.9f)
+        public static void ImageFadeOut(Image image, float targetAlpha = 0f, float fadeRate = 2f)
         {
             
             image.color = Blush(image.color, targetAlpha, fadeRate);
 
         }
 
-        public static void TextFadeOut(Text text, float targetAlpha = 0f, float fadeRate = 0.9f)
+        public static void TextFadeOut(Text text, float targetAlpha = 0f, float fadeRate = 2f)
         {
             
             text.color = Blush(text.color, targetAlpha, fadeRate);
