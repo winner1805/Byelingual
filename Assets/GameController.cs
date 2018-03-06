@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Assets.StoryTemplate.Infrastructure;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Assets
         private bool _init = true;
         private Story _currentStory;
         private List<GameObject> _panels;
+        private List<Image> _elementsToCrossfade;
 
 
         public Story CurrentStory
@@ -37,6 +39,7 @@ namespace Assets
             _stories = new Dictionary<string, Story>();
 
             _panels = new List<GameObject>();
+            _elementsToCrossfade = new List<Image>();
 
             FillPanels();
             
@@ -108,11 +111,18 @@ namespace Assets
             {
                 var a = IMG2Sprite.Instance(Stories.Values.ElementAt(0).SnakeCase() + "spriter");
                 var b = IMG2Sprite.Instance(Stories.Values.ElementAt(1).SnakeCase() + "spriter");
-                FindImage.Named("ImageStory1").sprite = await a.LoadNewSprite(Stories.Values.ElementAt(0).ImageUrl);
-                FindImage.Named("ImageStory1").name = Stories.Values.ElementAt(0).SnakeCase();
 
-                FindImage.Named("ImageStory2").sprite = await b.LoadNewSprite(Stories.Values.ElementAt(1).ImageUrl);
-                FindImage.Named("ImageStory2").name = Stories.Values.ElementAt(1).SnakeCase();
+                var ImageStory1 = FindImage.Named("ImageStory1");
+                ImageStory1.sprite = await a.LoadNewSprite(Stories.Values.ElementAt(0).ImageUrl);
+                ImageStory1.name = Stories.Values.ElementAt(0).SnakeCase();
+                VisualEffects.SetImageTransparent(ImageStory1);
+                _elementsToCrossfade.Add(ImageStory1);
+
+                var ImageStory2 = FindImage.Named("ImageStory2");
+                ImageStory2.sprite = await b.LoadNewSprite(Stories.Values.ElementAt(1).ImageUrl);
+                ImageStory2.name = Stories.Values.ElementAt(1).SnakeCase();
+                VisualEffects.SetImageTransparent(ImageStory2);
+                _elementsToCrossfade.Add(ImageStory2);
 
                 foreach (var story in Stories.Values)
                 {
@@ -135,10 +145,31 @@ namespace Assets
                 LoadButtons();
                 _init = false;
             }
-            
+
+            CrossFadeElements();
+
         }
 
-        
+        private void CrossFadeElements()
+        {
+            var itemsToRemove = new List<Image>();
+            foreach (var element in _elementsToCrossfade)
+            {
+                VisualEffects.FadeIn(element, 1.0f, 0.5f);
+                if (Math.Abs(element.color.a - 1.0f) > 0.0001)
+                {
+                    itemsToRemove.Add(element);
+                }
+            }
+            //cleanup
+            foreach (var image in itemsToRemove)
+            {
+                _elementsToCrossfade.Remove(image);
+            }
+
+
+        }
+
 
         private static void ExitGame()
         {
