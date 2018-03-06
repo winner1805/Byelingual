@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections;
-using Assets.StoryTemplate.Infrastructure;
+﻿using Assets.StoryTemplate.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,7 +12,6 @@ namespace Assets
         
         private Dictionary<string, Story> _stories;
         private Dictionary<string, Canvas> _canvases;
-        private Dictionary<string, Image> _storyLaunchers;
         private bool _init = true;
         private Story _currentStory;
         private List<GameObject> _panels;
@@ -155,8 +153,8 @@ namespace Assets
             var itemsToRemove = new List<Image>();
             foreach (var element in _elementsToCrossfade)
             {
-                VisualEffects.FadeIn(element, 1.0f, 0.5f);
-                if (Math.Abs(element.color.a - 1.0f) > 0.0001)
+                VisualEffects.ImageFadeIn(element, 1.0f, 0.8f);
+                if (Math.Abs(element.color.a - 1.0f) < 0.0001)
                 {
                     itemsToRemove.Add(element);
                 }
